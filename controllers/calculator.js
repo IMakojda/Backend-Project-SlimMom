@@ -29,8 +29,20 @@ const defaultCalculator = async (req, res, next) => {
 
 const userCalculator = async (req, res, next) => {
   const { userId } = req.params;
-  console.log('userId:', userId);
-  res.json('feature not finished yet');
+  try {
+    const { userData } = req.body;
+    if (!userData) throw createError(404, 'body Not found');
+    const { error } = schemaCalc.validate(userData);
+    if (error) {
+      console.log(error);
+      throw createError(400, error.message);
+    } else {
+      res.json({ result: calculation(userData) });
+      // todo edituser(userId,userData);
+    }
+  } catch (e) {
+    next(e);
+  }
 };
 
 module.exports = {
