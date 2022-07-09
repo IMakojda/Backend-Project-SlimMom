@@ -28,18 +28,9 @@ const userSchema = new Schema({
     type: Number,
     enum: [1, 2, 3, 4],
   },
-  avatarURL: String,
   token: {
     type: String,
     default: null,
-  },
-  verify: {
-    type: Boolean,
-    default: false,
-  },
-  verificationToken: {
-    type: String,
-    required: [true, "Verify token is required"],
   },
 });
 
@@ -59,25 +50,11 @@ const joiSchema = Joi.object({
     })
     .required(),
   password: Joi.string().required(),
-  subscription: Joi.string().valid("starter", "pro", "business"),
-  avatarURL: Joi.string(),
-});
-
-const joiSubscriptionSchema = Joi.object({
-  subscription: Joi.string().valid("starter", "pro", "business"),
-});
-
-const joiAvatarUrlSchema = Joi.object({
-  avatarURL: Joi.string(),
-});
-
-const joiEmailSchema = Joi.object({
-  email: Joi.string()
-    .email({
-      minDomainSegments: 2,
-      tlds: { allow: ["com", "net", "ua"] },
-    })
-    .required(),
+  height: Joi.number(),
+  age: Joi.number(),
+  current_weight: Joi.number(),
+  desired_weight: Joi.number(),
+  blood_type: Joi.number().valid(1, 2, 3, 4),
 });
 
 const User = model("User", userSchema);
@@ -85,7 +62,4 @@ const User = model("User", userSchema);
 module.exports = {
   User,
   joiSchema,
-  joiSubscriptionSchema,
-  joiAvatarUrlSchema,
-  joiEmailSchema,
 };
