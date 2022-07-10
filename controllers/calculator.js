@@ -1,5 +1,5 @@
 const { createError } = require('../helpers/errors');
-const { schemaCalc } = require('../models/calc');
+const { joiSchemaCalc } = require('../models/user');
 // ФОРМУЛА ДЛЯ РОЗРАХУНКУ ДЕННОЇ НОРМИ КАЛОРІЙ ЖІНКАМ
 // 10 * вага + 6.25 * зріст - 5 * вік - 161 - 10 * (вага - бажана вага)
 const calculation = (userData) => {
@@ -17,7 +17,7 @@ const defaultCalculator = async (req, res, next) => {
   try {
     const { userData } = req.body;
     if (!userData) throw createError(404, 'body Not found');
-    const { error } = schemaCalc.validate(userData);
+    const { error } = joiSchemaCalc.validate(userData);
     if (error) {
       console.log(error);
       throw createError(400, error.message);
@@ -32,7 +32,7 @@ const userCalculator = async (req, res, next) => {
   try {
     const { userData } = req.body;
     if (!userData) throw createError(404, 'body Not found');
-    const { error } = schemaCalc.validate(userData);
+    const { error } = joiSchemaCalc.validate(userData);
     if (error) {
       console.log(error);
       throw createError(400, error.message);
