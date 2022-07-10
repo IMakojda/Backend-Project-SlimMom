@@ -1,3 +1,6 @@
+const { joiSchemaCalc } = require('../../models/user');
+const { validation, catchWrapper, auth } = require('../../middlewares');
+
 const express = require('express');
 const {
   defaultCalculator,
@@ -5,8 +8,13 @@ const {
 } = require('../../controllers/calculator');
 const router = express.Router();
 
-router.get('/', defaultCalculator);
+router.get('/', validation(joiSchemaCalc), catchWrapper(defaultCalculator));
 
-router.get('/:userId', userCalculator);
+router.put(
+  '/:userId',
+  auth,
+  validation(joiSchemaCalc),
+  catchWrapper(userCalculator)
+);
 
 module.exports = router;

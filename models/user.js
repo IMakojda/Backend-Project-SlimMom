@@ -1,19 +1,19 @@
-const { Schema, model } = require("mongoose");
-const Joi = require("joi");
-const bcrypt = require("bcryptjs");
+const { Schema, model } = require('mongoose');
+const Joi = require('joi');
+const bcrypt = require('bcryptjs');
 
 const userSchema = new Schema({
   name: {
     type: String,
-    required: [true, "Name is required"],
+    required: [true, 'Name is required'],
   },
   password: {
     type: String,
-    required: [true, "Password is required"],
+    required: [true, 'Password is required'],
   },
   email: {
     type: String,
-    required: [true, "Email is required"],
+    required: [true, 'Email is required'],
     unique: true,
   },
   height: {
@@ -22,13 +22,13 @@ const userSchema = new Schema({
   age: {
     type: Number,
   },
-  current_weight: {
+  currentWeight: {
     type: Number,
   },
-  desired_weight: {
+  desiredWeight: {
     type: Number,
   },
-  blood_type: {
+  bloodType: {
     type: Number,
     enum: [1, 2, 3, 4],
     default: 1,
@@ -54,7 +54,7 @@ const joiSchemaSignUp = Joi.object({
     .max(254)
     .email({
       minDomainSegments: 2,
-      tlds: { allow: ["com", "net", "ua"] },
+      tlds: { allow: ['com', 'net', 'ua'] },
     })
     .required(),
   password: Joi.string().alphanum().min(8).max(100).required(),
@@ -66,7 +66,7 @@ const joiSchemaLogin = Joi.object({
     .max(254)
     .email({
       minDomainSegments: 2,
-      tlds: { allow: ["com", "net", "ua"] },
+      tlds: { allow: ['com', 'net', 'ua'] },
     })
     .required(),
   password: Joi.string().alphanum().min(8).max(100).required(),
@@ -75,12 +75,12 @@ const joiSchemaLogin = Joi.object({
 const joiSchemaCalc = Joi.object({
   height: Joi.number().min(100).max(250).integer().required(),
   age: Joi.number().min(18).max(100).integer().required(),
-  current_weight: Joi.number().min(20).max(500).required(),
-  desired_weight: Joi.number().min(20).max(500).required(),
-  blood_type: Joi.number().valid(1, 2, 3, 4).required(),
+  currentWeight: Joi.number().min(20).max(500).required(),
+  desiredWeight: Joi.number().min(20).max(500).required(),
+  bloodType: Joi.number().valid(1, 2, 3, 4).required(),
 });
 
-const User = model("User", userSchema);
+const User = model('User', userSchema);
 
 module.exports = {
   User,

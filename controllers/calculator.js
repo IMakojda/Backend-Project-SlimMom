@@ -1,7 +1,8 @@
-const { createError } = require('../helpers/errors');
-const { joiSchemaCalc } = require('../models/user');
 // ФОРМУЛА ДЛЯ РОЗРАХУНКУ ДЕННОЇ НОРМИ КАЛОРІЙ ЖІНКАМ
 // 10 * вага + 6.25 * зріст - 5 * вік - 161 - 10 * (вага - бажана вага)
+const { createError } = require('../helpers/errors');
+const { updateUser } = require('./users');
+const { findProducts } = require('./products');
 const calculation = (userData) => {
   const { height, age, currentWeight, desiredWeight } = userData;
   const result =
@@ -13,36 +14,33 @@ const calculation = (userData) => {
   return result;
 };
 
+const prohibited = (userData) => {
+  const { bloodType } = userData;
+  // console.log(findProducts);
+  // const result = findProducts(`groupBloodNotAllowed`, `[${bloodType}]==true`);
+  // const result = findProducts(`calories`, 623);
+  const result = findProducts(`groupBloodNotAllowed`, `[${bloodType}]==true`);
+  return result;
+};
+
 const defaultCalculator = async (req, res, next) => {
-  try {
-    const { userData } = req.body;
-    if (!userData) throw createError(404, 'body Not found');
-    const { error } = joiSchemaCalc.validate(userData);
-    if (error) {
-      console.log(error);
-      throw createError(400, error.message);
-    } else res.json({ result: calculation(userData) });
-  } catch (e) {
-    next(e);
-  }
+  prohibited(req.body);
+  res.json({
+    callory: calculation(req.body),
+    // prohibited: prohibited(req.body),
+  });
 };
 
 const userCalculator = async (req, res, next) => {
-  const { userId } = req.params;
-  try {
-    const { userData } = req.body;
-    if (!userData) throw createError(404, 'body Not found');
-    const { error } = joiSchemaCalc.validate(userData);
-    if (error) {
-      console.log(error);
-      throw createError(400, error.message);
-    } else {
-      res.json({ result: calculation(userData) });
-      // todo edituser(userId,userData);
-    }
-  } catch (e) {
-    next(e);
-  }
+  const paramId = req.params.userId;
+  const tokenId = req.userId;
+  if (paramId !== tokenId) throw createError(400, `${paramId} is wrong id`);
+
+  updateUser(paramId, req.body);
+  res.json({
+    result: calculation(req.body),
+  });
+  // todo edituser(userId,userData);
 };
 
 module.exports = {
