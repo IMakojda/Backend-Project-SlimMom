@@ -14,12 +14,16 @@ const calculation = (userData) => {
   return result;
 };
 
-const prohibited = (userData) => {
+const prohibited = async (userData) => {
   const { bloodType } = userData;
-  // console.log(findProducts);
-  // const result = findProducts(`groupBloodNotAllowed`, `[${bloodType}]==true`);
-  // const result = findProducts(`calories`, 623);
-  const result = findProducts(`groupBloodNotAllowed`, `[${bloodType}]==true`);
+  const options = { _id: 0, title: 1 };
+  const limit = 10;
+  const result = await findProducts(
+    `groupBloodNotAllowed[${bloodType}]`,
+    true,
+    options,
+    limit
+  );
   return result;
 };
 
@@ -27,7 +31,7 @@ const defaultCalculator = async (req, res, next) => {
   prohibited(req.body);
   res.json({
     callory: calculation(req.body),
-    // prohibited: prohibited(req.body),
+    prohibited: await prohibited(req.body),
   });
 };
 
@@ -38,9 +42,9 @@ const userCalculator = async (req, res, next) => {
 
   updateUser(paramId, req.body);
   res.json({
-    result: calculation(req.body),
+    callory: calculation(req.body),
+    prohibited: await prohibited(req.body),
   });
-  // todo edituser(userId,userData);
 };
 
 module.exports = {

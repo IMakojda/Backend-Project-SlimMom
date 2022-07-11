@@ -1,11 +1,10 @@
 const { Product } = require('../../models');
 
-const findProducts = async (field, data) => {
+const findProducts = async (field, data, options, limit) => {
   try {
-    console.log('field:', field);
-    console.log('data:', data);
-    const products = await Product.find({ [field]: data });
-    console.log('products:', products);
+    const products = await Product.find({ [field]: data }, options).limit(
+      limit
+    );
     return products;
   } catch (e) {
     return e;
