@@ -12,9 +12,20 @@ Registration request:
 
 POST /users/signup
 
-RequestBody: {
+Обовʼязкові поля:
+"name": "Jon Smit"
 "email": "example@example.com",
-"password": "examplepassword"
+"password": "examplepassword",
+
+RequestBody: {
+"name": "Jon Smit"
+"email": "example@example.com",
+"password": "examplepassword",
+"height": Number,
+"age": Number,
+"currentWeight": Number,
+"desiredWeight": Number,
+"bloodType": Number,
 }
 ===============================
 
@@ -58,7 +69,9 @@ RequestBody (example): {
 ==================================
 calc request (after login)
 PUT /calculator/userId
+
 # Authorization: "Bearer {{token}}"
+
 RequestBody (example): {
 "height": 180,
 "age": 32,

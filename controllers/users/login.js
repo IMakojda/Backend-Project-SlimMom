@@ -1,6 +1,6 @@
-const { User } = require("../../models");
-const { Unauthorized } = require("http-errors");
-const jwt = require("jsonwebtoken");
+const { User } = require('../../models');
+const { Unauthorized } = require('http-errors');
+const createToken = require('../../helpers/createToken');
 
 const login = async (req, res) => {
   const { email, password } = req.body;
@@ -8,20 +8,23 @@ const login = async (req, res) => {
   const isValidPassword = user?.comparePassword(password);
 
   if (!user || !isValidPassword) {
-    throw new Unauthorized("Email or password is wrong");
+    throw new Unauthorized('Email or password is wrong');
   }
 
-  const payload = {
-    id: user._id,
-  };
+  const token = await createToken(user);
 
-  const token = jwt.sign(payload, process.env.SECRET_KEY);
-  await User.findByIdAndUpdate(user._id, { token });
+  const { name, height, age, currentWeight, desiredWeight, bloodType } = user;
 
   res.json({
     token,
     user: {
+      name,
       email,
+      height,
+      age,
+      currentWeight,
+      desiredWeight,
+      bloodType,
     },
   });
 };
