@@ -18,15 +18,19 @@ const userSchema = new Schema({
   },
   height: {
     type: Number,
+    default: null,
   },
   age: {
     type: Number,
+    default: null,
   },
   currentWeight: {
     type: Number,
+    default: null,
   },
   desiredWeight: {
     type: Number,
+    default: null,
   },
   bloodType: {
     type: Number,
@@ -48,22 +52,27 @@ userSchema.methods.comparePassword = function (password) {
 };
 
 const joiSchemaSignUp = Joi.object({
-  name: Joi.string().min(3).max(254).required(),
+  name: Joi.string().min(3).max(50).required(),
   email: Joi.string()
-    .min(3)
-    .max(254)
+    .min(6)
+    .max(50)
     .email({
       minDomainSegments: 2,
       tlds: { allow: ['com', 'net', 'ua'] },
     })
     .required(),
   password: Joi.string().alphanum().min(8).max(100).required(),
+  height: Joi.number().min(100).max(250).integer(),
+  age: Joi.number().min(18).max(100).integer(),
+  currentWeight: Joi.number().min(20).max(500),
+  desiredWeight: Joi.number().min(20).max(500),
+  bloodType: Joi.number().valid(1, 2, 3, 4),
 });
 
 const joiSchemaLogin = Joi.object({
   email: Joi.string()
-    .min(3)
-    .max(254)
+    .min(6)
+    .max(50)
     .email({
       minDomainSegments: 2,
       tlds: { allow: ['com', 'net', 'ua'] },

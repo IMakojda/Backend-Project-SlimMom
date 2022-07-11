@@ -1,8 +1,15 @@
 const getCurrent = async (req, res) => {
-  const { email } = req.user;
+  const { name, email, height, age, currentWeight, desiredWeight, bloodType } =
+    req.user;
 
   res.json({
-    email: email,
+    name,
+    email,
+    height,
+    age,
+    currentWeight,
+    desiredWeight,
+    bloodType,
   });
 };
 
