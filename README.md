@@ -41,4 +41,28 @@ Current user request:
 
 GET /users/current
 
-Authorization: "Bearer {{token}}"
+# Authorization: "Bearer {{token}}"
+
+==================================
+
+calc request (without login)
+GET /calculator
+
+RequestBody (example): {
+"height": 180,
+"age": 32,
+"currentWeight": 85,
+"desiredWeight": 75,
+"bloodType": 1
+}
+==================================
+calc request (after login)
+PUT /calculator/userId
+# Authorization: "Bearer {{token}}"
+RequestBody (example): {
+"height": 180,
+"age": 32,
+"currentWeight": 85,
+"desiredWeight": 75,
+"bloodType": 1
+}
