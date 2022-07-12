@@ -10,5 +10,13 @@ const findProducts = async (field, data, options, limit) => {
     return e;
   }
 };
+const findProductById = async (id) => {
+  try {
+    const product = await Product.findById(id);
+    return product;
+  } catch (e) {
+    return e;
+  }
+};
 
-module.exports = findProducts;
+module.exports = { findProducts, findProductById };
