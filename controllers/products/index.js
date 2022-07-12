@@ -1,5 +1,6 @@
-const findProducts = require('./findProduct');
+const { findProducts, findProductById } = require('./findProduct');
 
 module.exports = {
   findProducts,
+  findProductById,
 };

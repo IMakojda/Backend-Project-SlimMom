@@ -5,7 +5,7 @@ const { NotFound } = require('http-errors');
 const { errorHandler } = require('./middlewares');
 
 const usersRouter = require('./routes/api/users');
-const calculatorRouter = require('./routes/api/calculator');
+const calcRouter = require('./routes/api/calc');
 const app = express();
 
 const formatsLogger = app.get('env') === 'development' ? 'dev' : 'short';
@@ -15,7 +15,7 @@ app.use(cors());
 app.use(express.json());
 
 app.use('/api/users', usersRouter);
-app.use('/api/calculator', calculatorRouter);
+app.use('/api/calc', calcRouter);
 app.use((req, res, next) => {
   next(new NotFound());
 });
