@@ -34,7 +34,7 @@ router.post(
 );
 
 router.delete(
-  '/user/:productId',
+  '/user',
   auth,
   validation(schemaDeleteProduct),
   catchWrapper(deleteProduct)
