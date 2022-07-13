@@ -1,3 +1,4 @@
+const gravatar = require('gravatar');
 const { User } = require('../../models');
 const { Conflict } = require('http-errors');
 const createToken = require('../../helpers/createToken');
@@ -20,9 +21,12 @@ const signUp = async (req, res) => {
     throw new Conflict('Email in use');
   }
 
+  const avatarURL = gravatar.url(email, { d: 'identicon' });
+
   const newUser = new User({
     name,
     email,
+    avatarURL,
     height,
     age,
     currentWeight,
@@ -39,6 +43,7 @@ const signUp = async (req, res) => {
     user: {
       name,
       email,
+      avatarURL,
       height,
       age,
       currentWeight,
