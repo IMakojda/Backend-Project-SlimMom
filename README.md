@@ -10,7 +10,7 @@
 ===============================
 Registration request:
 
-POST /users/signup
+POST api/users/signup
 
 Обовʼязкові поля:
 "name": "Jon Smit"
@@ -32,7 +32,7 @@ RequestBody: {
 ===============================
 Login request:
 
-POST /users/login
+POST api/users/login
 
 RequestBody: {
 "email": "example@example.com",
@@ -43,21 +43,21 @@ RequestBody: {
 ===============================
 Logout request:
 
-GET /users/logout
+GET api/users/logout
 
 # Authorization: "Bearer {{token}}"
 
 ===============================
 Current user request:
 
-GET /users/current
+GET api/users/current
 
 # Authorization: "Bearer {{token}}"
 
 ==================================
 
 calc request (without login)
-GET /calculator
+GET api/calc
 
 RequestBody (example): {
 "height": 180,
@@ -68,14 +68,48 @@ RequestBody (example): {
 }
 ==================================
 calc request (after login)
-PUT /calculator/userId
+PUT api/calc/user
 
 # Authorization: "Bearer {{token}}"
 
-RequestBody (example): {
+RequestBody (example):
+{
 "height": 180,
 "age": 32,
 "currentWeight": 85,
 "desiredWeight": 75,
 "bloodType": 1
+}
+==================================
+setProduct request
+POST api/calc/user
+
+# Authorization: "Bearer {{token}}"
+
+RequestBody (example):
+{
+"date":"2022.07.13Z",
+"productId":"5d51694802b2373622ff555c",
+"productWeight":100
+}
+==================================
+deleteProduct request
+DELETE api/calc/user
+
+# Authorization: "Bearer {{token}}"
+
+RequestBody (example):
+{  
+"date":"2022.07.13Z",
+"productId":"5d51694802b2373622ff555c"
+}
+==================================
+viewDailyInfo request
+GET api/calc/user
+
+# Authorization: "Bearer {{token}}"
+
+RequestBody (example):
+{  
+"date":"2022.07.13Z"
 }
