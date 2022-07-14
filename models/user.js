@@ -45,6 +45,16 @@ const userSchema = new Schema({
     type: String,
     default: null,
   },
+  dailyRate: {
+  type: Number,
+  default: null,
+  },
+  notRecFood: {
+	type: Array,
+	title: {
+		type: String,
+	},
+  },
 });
 
 userSchema.methods.setPassword = function (password) {

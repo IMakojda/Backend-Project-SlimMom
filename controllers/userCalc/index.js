@@ -1,6 +1,6 @@
-const { setProduct, delProduct, viewInfo } = require('./userCalc');
+const { setProduct, deleteProduct, viewDailyInfo } = require('./userCalc');
 module.exports = {
   setProduct,
-  delProduct,
-  viewInfo,
+  deleteProduct,
+  viewDailyInfo,
 };

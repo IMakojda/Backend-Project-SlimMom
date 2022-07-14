@@ -71,7 +71,7 @@ GET api/products?product=ГоРоХ
 ===============================
 
 calc request (without login)
-GET /api/calculator
+GET api/calc
 
 RequestBody (example): {
 "height": 180,
@@ -82,14 +82,48 @@ RequestBody (example): {
 }
 ==================================
 calc request (after login)
-PUT /api/calculator/userId
+PUT api/calc/user
 
 # Authorization: "Bearer {{token}}"
 
-RequestBody (example): {
+RequestBody (example):
+{
 "height": 180,
 "age": 32,
 "currentWeight": 85,
 "desiredWeight": 75,
 "bloodType": 1
+}
+==================================
+setProduct request
+POST api/calc/user
+
+# Authorization: "Bearer {{token}}"
+
+RequestBody (example):
+{
+"date":"2022.07.13Z",
+"productId":"5d51694802b2373622ff555c",
+"productWeight":100
+}
+==================================
+deleteProduct request
+DELETE api/calc/user
+
+# Authorization: "Bearer {{token}}"
+
+RequestBody (example):
+{  
+"date":"2022.07.13Z",
+"productId":"5d51694802b2373622ff555c"
+}
+==================================
+viewDailyInfo request
+GET api/calc/user
+
+# Authorization: "Bearer {{token}}"
+
+RequestBody (example):
+{  
+"date":"2022.07.13Z"
 }

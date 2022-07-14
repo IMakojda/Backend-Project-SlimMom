@@ -1,56 +1,119 @@
-// const { date } = require('joi');
 const { Calc } = require('../../models');
 const { findProductById } = require('../products');
 const checkBase = async (date, userId) => {
-  return await Calc.find({ user: userId, date: date });
+  const result = await Calc.find({ user: userId, date: date });
+  return result[0];
+};
+
+const calcSummary = (products, dailyRate) => {
+  let consumed = 0;
+  for (const product of products) {
+    consumed += product.calories;
+  }
+  const summary = {
+    dailyRate: dailyRate,
+    consumed: consumed,
+    left: dailyRate - consumed,
+    nOfNorm: Math.round((consumed / dailyRate) * 100),
+  };
+  return summary;
 };
 
 const setProduct = async (req, res, next) => {
   try {
+    const { dailyRate } = req.user;
     const { productId, date, productWeight } = req.body;
     const userId = req.userId;
+    const query = { user: userId, date: date };
     const product = await findProductById(productId);
     const calories = (product.calories / 100) * productWeight;
+    const result = await checkBase(date, userId);
     const newProduct = {
       id: product._id,
       title: product.title,
       weight: productWeight,
       calories: calories,
     };
-    console.log('newProduct', newProduct);
-    const result = await checkBase(date, userId);
-    console.log('result:', result);
-    if (result[0]) {
-      console.log('Is in Base');
-      const calc = await Calc.findOneAndUpdate(
-        { user: userId, date: date },
-        { products: [...result[0].products, newProduct] },
-        { new: true }
+
+    if (result) {
+      const userProducts = result.products;
+      const productIndex = userProducts.findIndex(
+        (product) => product.id.toString() === productId
       );
-      res.json({ product: calc });
+      if (productIndex !== -1) {
+        userProducts[productIndex].calories += calories;
+        userProducts[productIndex].weight += productWeight;
+        const summary = calcSummary(userProducts, dailyRate);
+        await Calc.findOneAndUpdate(
+          query,
+          { products: userProducts, summary: summary },
+          { new: true }
+        );
+      } else {
+        const newProducts = [...userProducts, newProduct];
+        const summary = calcSummary(newProducts, dailyRate);
+        await Calc.findOneAndUpdate(
+          query,
+          { products: newProducts, summary: summary },
+          { new: true }
+        );
+      }
     } else {
-      console.log('Is not in Base');
-      const calc = await Calc.create({
-        user: userId,
-        date: date,
+      const summary = calcSummary([newProduct], dailyRate);
+      await Calc.create({
+        ...query,
         products: [newProduct],
+        summary: summary,
       });
-      res.json({ res: calc });
     }
+    const calc = await checkBase(date, userId);
+    res.json({ result: calc });
   } catch (e) {
     return e;
   }
 };
 
-const delProduct = async (req, res, next) => {
-  res.json({ message: 'delProduct is used' });
+const deleteProduct = async (req, res, next) => {
+  try {
+    const { dailyRate } = req.user;
+    const { productId, date } = req.body;
+    const userId = req.userId;
+    const result = await checkBase(date, userId);
+    if (result) {
+      const products = result.products;
+      const newProducts = products.filter(
+        (product) => product.id.toString() !== productId
+      );
+      const summary = calcSummary(newProducts, dailyRate);
+      const calc = await Calc.findOneAndUpdate(
+        { user: userId, date: date },
+        { products: newProducts, summary: summary },
+        { new: true }
+      );
+      res.json({ result: calc });
+    }
+  } catch (e) {
+    return e;
+  }
 };
-
-const viewInfo = async (req, res, next) => {
-  res.json({ message: 'viewInfo is used' });
+const viewDailyInfo = async (req, res, next) => {
+  try {
+    const { date } = req.body;
+    const userId = req.userId;
+    const { notRecFood } = req.user;
+    const result = await checkBase(date, userId);
+    if (result) {
+      res.json({
+        result: result,
+        notRecFood: notRecFood,
+      });
+    }
+  } catch (e) {
+    return e;
+  }
 };
 module.exports = {
   setProduct,
-  delProduct,
-  viewInfo,
+  deleteProduct,
+  viewDailyInfo,
 };

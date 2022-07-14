@@ -17,7 +17,7 @@ const calculation = (userData) => {
 const prohibited = async (userData) => {
   const { bloodType } = userData;
   const options = { _id: 0, title: 1 };
-  const limit = 10;
+  const limit = 4;
   const result = await findProducts(
     `groupBloodNotAllowed[${bloodType}]`,
     true,
@@ -28,19 +28,22 @@ const prohibited = async (userData) => {
 };
 
 const defaultCalculator = async (req, res, next) => {
-  prohibited(req.body);
   res.json({
-    callory: calculation(req.body),
-    prohibited: await prohibited(req.body),
+    dailyRate: calculation(req.body),
+    notRecFood: await prohibited(req.body),
   });
 };
 
 const userCalculator = async (req, res, next) => {
   const tokenId = req.userId;
+  const dailyRate = calculation(req.body);
+  const notRecFood = await prohibited(req.body);
+  req.body.dailyRate=dailyRate;
+  req.body.notRecFood=notRecFood;
   updateUser(tokenId, req.body);
   res.json({
-    callory: calculation(req.body),
-    prohibited: await prohibited(req.body),
+    dailyRate: dailyRate,
+    notRecFood: notRecFood,
   });
 };
 
