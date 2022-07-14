@@ -10,7 +10,7 @@
 ===============================
 Registration request:
 
-POST /users/signup
+POST /api/users/signup
 
 Обовʼязкові поля:
 "name": "Jon Smit"
@@ -32,7 +32,7 @@ RequestBody: {
 ===============================
 Login request:
 
-POST /users/login
+POST /api/users/login
 
 RequestBody: {
 "email": "example@example.com",
@@ -43,21 +43,35 @@ RequestBody: {
 ===============================
 Logout request:
 
-GET /users/logout
+GET /api/users/logout
 
 # Authorization: "Bearer {{token}}"
 
 ===============================
+
+===============================
 Current user request:
 
-GET /users/current
+GET /api/users/current
 
 # Authorization: "Bearer {{token}}"
 
-==================================
+===============================
+
+===============================
+
+Search product request:
+
+GET api/products?product=ГоРоХ
+
+# Authorization: "Bearer {{token}}"
+
+===============================
+
+===============================
 
 calc request (without login)
-GET /calculator
+GET /api/calculator
 
 RequestBody (example): {
 "height": 180,
@@ -68,7 +82,7 @@ RequestBody (example): {
 }
 ==================================
 calc request (after login)
-PUT /calculator/userId
+PUT /api/calculator/userId
 
 # Authorization: "Bearer {{token}}"
 
