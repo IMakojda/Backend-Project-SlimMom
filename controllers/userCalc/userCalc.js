@@ -107,6 +107,23 @@ const viewDailyInfo = async (req, res, next) => {
         result: result,
         notRecFood: notRecFood,
       });
+    } else {
+      const { dailyRate, notRecFood } = req.user;
+      const summary = {
+        dailyRate: dailyRate,
+        consumed: 0,
+        left: dailyRate,
+        nOfNorm: 0,
+      };
+      res.json({
+        result: {
+          user: userId,
+          date: new Date(date),
+          products: [],
+          summary: summary,
+        },
+        notRecFood: notRecFood,
+      });
     }
   } catch (e) {
     return e;
