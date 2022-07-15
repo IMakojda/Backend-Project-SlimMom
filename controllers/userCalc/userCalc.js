@@ -98,7 +98,7 @@ const deleteProduct = async (req, res, next) => {
 };
 const viewDailyInfo = async (req, res, next) => {
   try {
-    const { date } = req.body;
+    const { date } = req.params;
     const userId = req.userId;
     const { notRecFood } = req.user;
     const result = await checkBase(date, userId);

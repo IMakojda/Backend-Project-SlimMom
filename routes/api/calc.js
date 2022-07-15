@@ -4,7 +4,12 @@ const {
   schemaDeleteProduct,
   schemaDailyInfo,
 } = require('../../models/calc');
-const { validation, catchWrapper, auth } = require('../../middlewares');
+const {
+  validation,
+  validateParams,
+  catchWrapper,
+  auth,
+} = require('../../middlewares');
 
 const express = require('express');
 const {
@@ -18,7 +23,7 @@ const {
 } = require('../../controllers/userCalc');
 const router = express.Router();
 
-router.get('/', validation(joiSchemaCalc), catchWrapper(defaultCalculator));
+router.post('/', validation(joiSchemaCalc), catchWrapper(defaultCalculator));
 
 router.put(
   '/user',
@@ -40,9 +45,9 @@ router.delete(
   catchWrapper(deleteProduct)
 );
 router.get(
-  '/user',
+  '/user/:date',
   auth,
-  validation(schemaDailyInfo),
+  validateParams(schemaDailyInfo),
   catchWrapper(viewDailyInfo)
 );
 

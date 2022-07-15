@@ -71,7 +71,7 @@ GET api/products?product=ГоРоХ
 ===============================
 
 calc request (without login)
-GET api/calc
+POST api/calc
 
 RequestBody (example): {
 "height": 180,
@@ -119,11 +119,9 @@ RequestBody (example):
 }
 ==================================
 viewDailyInfo request
-GET api/calc/user
+GET api/calc/user/:date
 
 # Authorization: "Bearer {{token}}"
 
-RequestBody (example):
-{  
-"date":"2022.07.13Z"
-}
+RequestParams (example):
+api/calc/user/2022.07.14Z
