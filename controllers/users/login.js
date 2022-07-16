@@ -13,13 +13,22 @@ const login = async (req, res) => {
 
   const token = await createToken(user);
 
-  const { name, height, age, currentWeight, desiredWeight, bloodType } = user;
+  const {
+    name,
+    avatarURL,
+    height,
+    age,
+    currentWeight,
+    desiredWeight,
+    bloodType,
+  } = user;
 
   res.json({
     token,
     user: {
       name,
       email,
+      avatarURL,
       height,
       age,
       currentWeight,

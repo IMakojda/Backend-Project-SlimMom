@@ -13,13 +13,18 @@ const getProduct = async (req, res) => {
       { 'title.ru': { $regex: product, $options: 'i' } },
       { 'title.ua': { $regex: product, $options: 'i' } },
     ],
-  });
+  }).select('title.ua');
 
-  if (!productsList.length) {
+  const optimizedProductList = productsList.map((product) => ({
+    id: product._id,
+    label: product.title.ua,
+  }));
+
+  if (!optimizedProductList.length) {
     throw new NotFound('Product not found');
   }
 
-  res.json(productsList);
+  res.json(optimizedProductList);
 };
 
 module.exports = getProduct;

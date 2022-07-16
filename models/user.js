@@ -46,14 +46,14 @@ const userSchema = new Schema({
     default: null,
   },
   dailyRate: {
-  type: Number,
-  default: null,
+    type: Number,
+    default: null,
   },
   notRecFood: {
-	type: Array,
-	title: {
-		type: String,
-	},
+    type: Array,
+    title: {
+      type: String,
+    },
   },
 });
 
@@ -103,6 +103,10 @@ const joiSchemaCalc = Joi.object({
   bloodType: Joi.number().valid(1, 2, 3, 4).required(),
 });
 
+const joiAvatarUrlSchema = Joi.object({
+  avatarURL: Joi.string(),
+});
+
 const User = model('User', userSchema);
 
 module.exports = {
@@ -110,4 +114,5 @@ module.exports = {
   joiSchemaSignUp,
   joiSchemaLogin,
   joiSchemaCalc,
+  joiAvatarUrlSchema,
 };
