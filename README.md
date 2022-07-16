@@ -59,6 +59,19 @@ GET /api/users/current
 ===============================
 
 ===============================
+Update avatar request:
+
+PATCH /api/users/avatars
+
+RequestBody: {
+"avatar": avatar.jpg,
+}
+
+# Content-Type: multipart/form-data
+
+===============================
+
+===============================
 
 Search product request:
 

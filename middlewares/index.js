@@ -2,6 +2,7 @@ const { validation, validateParams } = require('./validation');
 const catchWrapper = require('./catchWrapper');
 const errorHandler = require('./errorHandler');
 const auth = require('./auth');
+const upload = require('./upload');
 
 module.exports = {
   validation,
@@ -9,4 +10,5 @@ module.exports = {
   catchWrapper,
   errorHandler,
   auth,
+  upload,
 };
