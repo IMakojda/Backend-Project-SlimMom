@@ -39,9 +39,9 @@ router.post(
 );
 
 router.delete(
-  '/user',
+  '/user/:date/:productId',
   auth,
-  validation(schemaDeleteProduct),
+  validateParams(schemaDeleteProduct),
   catchWrapper(deleteProduct)
 );
 router.get(

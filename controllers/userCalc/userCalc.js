@@ -76,7 +76,7 @@ const setProduct = async (req, res, next) => {
 const deleteProduct = async (req, res, next) => {
   try {
     const { dailyRate } = req.user;
-    const { productId, date } = req.body;
+    const { productId, date } = req.params;
     const userId = req.userId;
     const result = await checkBase(date, userId);
     if (result) {
