@@ -121,15 +121,12 @@ RequestBody (example):
 }
 ==================================
 deleteProduct request
-DELETE api/calc/user
+DELETE api/calc/user/:date/:productId'
 
 # Authorization: "Bearer {{token}}"
 
-RequestBody (example):
-{  
-"date":"2022.07.13Z",
-"productId":"5d51694802b2373622ff555c"
-}
+RequestParams (example):
+api/calc/user/2022.07.15Z/5d51694802b2373622ff5530
 ==================================
 viewDailyInfo request
 GET api/calc/user/:date
