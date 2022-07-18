@@ -20,6 +20,10 @@ const userSchema = new Schema({
     type: String,
     required: true,
   },
+  createdAt: {
+    type: String,
+    default: new Date().toLocaleDateString(),
+  },
   height: {
     type: Number,
     default: null,

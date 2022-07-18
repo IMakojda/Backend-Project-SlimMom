@@ -23,10 +23,13 @@ const signUp = async (req, res) => {
 
   const avatarURL = gravatar.url(email, { d: 'identicon' });
 
+  const createdAt = new Date().toLocaleDateString();
+
   const newUser = new User({
     name,
     email,
     avatarURL,
+    createdAt,
     height,
     age,
     currentWeight,
@@ -44,6 +47,7 @@ const signUp = async (req, res) => {
       name,
       email,
       avatarURL,
+      createdAt,
       height,
       age,
       currentWeight,
