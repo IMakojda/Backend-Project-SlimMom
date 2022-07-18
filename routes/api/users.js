@@ -59,7 +59,7 @@ const router = express.Router();
  * @swagger
  * tags:
  *   name: Users
- *   description: The books managing API
+ *   description: The users managing API
  */
 
 /**
