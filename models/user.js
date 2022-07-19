@@ -108,7 +108,7 @@ const joiSchemaCalc = Joi.object({
 });
 
 const joiAvatarUrlSchema = Joi.object({
-  avatarURL: Joi.string(),
+  avatar: Joi.string(),
 });
 
 const User = model('User', userSchema);
