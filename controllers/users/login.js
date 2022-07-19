@@ -16,6 +16,7 @@ const login = async (req, res) => {
   const {
     name,
     avatarURL,
+    createdAt,
     height,
     age,
     currentWeight,
@@ -29,6 +30,7 @@ const login = async (req, res) => {
       name,
       email,
       avatarURL,
+      createdAt,
       height,
       age,
       currentWeight,
