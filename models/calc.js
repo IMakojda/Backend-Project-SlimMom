@@ -1,4 +1,3 @@
-// const { date } = require('joi');
 const { Schema, model } = require('mongoose');
 const Joi = require('joi').extend(require('@joi/date'));
 Joi.objectId = require('joi-objectid')(Joi);
@@ -10,7 +9,6 @@ const calcSchema = new Schema({
   },
   date: {
     type: Date,
-    // .format('DD.MM.YYYY'),
     required: [true, 'date is required'],
   },
   products: {
