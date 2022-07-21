@@ -104,7 +104,19 @@ const router = express.Router();
  *      content:
  *        application/json:
  *          schema:
- *            $ref: '#/components/schemas/Calc'
+ *            type: object
+ *            properties:
+ *              height: number
+ *              age: number
+ *              currentWeight: number
+ *              desiredWeight: number
+ *              bloodType: number
+ *          example:
+ *            height: 175
+ *            age: 37
+ *            currentWeight: 90
+ *            desiredWeight: 75
+ *            bloodType: 3
  *     responses:
  *       200:
  *         description: OK
@@ -140,7 +152,19 @@ router.post('/', validation(joiSchemaCalc), catchWrapper(defaultCalculator));
  *      content:
  *        application/json:
  *          schema:
- *            $ref: '#/components/schemas/Calc'
+ *            type: object
+ *            properties:
+ *              height: number
+ *              age: number
+ *              currentWeight: number
+ *              desiredWeight: number
+ *              bloodType: number
+ *          example:
+ *            height: 175
+ *            age: 37
+ *            currentWeight: 90
+ *            desiredWeight: 75
+ *            bloodType: 3
  *     responses:
  *       200:
  *         description: OK
@@ -181,7 +205,15 @@ router.put(
  *      content:
  *        application/json:
  *          schema:
- *            $ref: '#/components/schemas/Calc'
+ *            type: object
+ *            properties:
+ *              productId: objectId
+ *              date: Date
+ *              productWeight: number
+ *          example:
+ *            productId: 5d51694802b2373622ff5593
+ *            date: 2022.07.21Z
+ *            productWeight: 200
  *     responses:
  *       200:
  *         description: OK
@@ -246,12 +278,14 @@ router.post(
  *         name: date
  *         schema:
  *           type: string
+ *           example: 2022.07.21Z
  *         required: true
  *         description: date.
  *       - in: path
  *         name: productId
  *         schema:
  *           type: string
+ *           example: 5d51694802b2373622ff5593
  *         required: true
  *         description: productId.
  *     responses:
@@ -318,6 +352,7 @@ router.delete(
  *         name: date
  *         schema:
  *           type: string
+ *           example: 2022.07.21Z
  *         required: true
  *         description: date.
  *     responses:
