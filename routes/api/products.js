@@ -65,6 +65,7 @@ const router = express.Router();
  *         name: product
  *         schema:
  *           type: string
+ *           example: Горох
  *         required: true
  *         description: user query.
  *     responses:
@@ -75,12 +76,14 @@ const router = express.Router();
  *             schema:
  *               type: array
  *               items:
- *                 id:
- *                   type: string
- *                   example: 5d51694802b2373622ff554f
- *                 label:
- *                   type: string
- *                   example: Горох Містраль Орегон
+ *                 type: object
+ *                 properties:
+ *                   id:
+ *                     type: string
+ *                     example: 5d51694802b2373622ff554f
+ *                   label:
+ *                     type: string
+ *                     example: Горох Містраль Орегон
  */
 
 router.get('/', auth, catchWrapper(ctrl.getProduct));
