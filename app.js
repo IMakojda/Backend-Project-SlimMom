@@ -40,7 +40,10 @@ const options = {
       },
     ],
   },
-  apis: ['./routes/api/*.js'],
+  apis: ['./routes/swagger/users.js',
+         './routes/swagger/calc.js',
+         './routes/swagger/products.js'
+        ],
 };
 
 const specs = swaggerJsDoc(options);
